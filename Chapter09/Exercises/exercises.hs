@@ -102,27 +102,27 @@ squishAgain = squishMap id
 -- comparison returned GT for.
 myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
 -- myMaximumBy _ []     = ?
-myMaximumBy f (x:xs) = go f xs x
-  where go _ [] r     = r
-        go g [y] r    = case g y r of
-                             GT -> y
-                             _  -> r
-        go g (y:ys) r = case g y r of
-                             GT -> go g ys y
-                             _  -> go g ys r
+myMaximumBy function (x:xs) = go function x xs
+  where go _ r []     = r
+        go f r [y]    = case f r y of
+                             GT -> r
+                             _  -> y
+        go f r (y:ys) = case f r y of
+                             GT -> go f r ys
+                             _  -> go f y ys
 
 -- 9. myMinimumBy takes a comparison function and a list and returns
 -- the least element of the list based on the last value that the com-
 -- parison returned LT for.
 myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
-myMinimumBy f (x:xs) = go f xs x
-  where go _ [] r     = r
-        go g [y] r    = case g y r of
-                             LT -> y
-                             _  -> r
-        go g (y:ys) r = case g y r of
-                             LT -> go g ys y
-                             _  -> go g ys r
+myMinimumBy function (x:xs) = go function x xs
+  where go _ r []     = r
+        go f r [y]    = case f r y of
+                             LT -> r
+                             _  -> y
+        go f r (y:ys) = case f r y of
+                             LT -> go f r ys
+                             _  -> go f y ys
 
 -- 10. Using the myMinimumBy and myMaximumBy functions, write your
 -- own versions of maximum and minimum .
